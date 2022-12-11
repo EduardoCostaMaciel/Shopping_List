@@ -1,33 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import { Header } from './components/Header'
+import { Iproduct } from './types';
 
-function App() {
-  const [count, setCount] = useState(0)
+export const App = () => {
+  const productListLocalStorage = localStorage.getItem('productList') || 'false';
+  const initialState: [] = JSON.parse(productListLocalStorage) || [];
+
+  const [productList, setProductList] = useState<Iproduct[]>(initialState);
+
+  useEffect(() => {
+    localStorage.setItem('productList', JSON.stringify(productList)), [productList]
+  })
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <main className="min-h-screen bg-primary-300 sm:container">
+      <Header productList={productList} />
+
+      <h1>productList</h1>
+
+      <h1>Form</h1>
+    </main>
   )
 }
 
