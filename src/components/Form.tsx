@@ -9,6 +9,8 @@ type propsForm = {
   setNewPrice: React.Dispatch<React.SetStateAction<string>>;
   productList: Iproduct[];
   setProductList: React.Dispatch<React.SetStateAction<Iproduct[]>>;
+  editIten: Iproduct | undefined;
+  handleEditIten: () => void;
 }
 
 export function Form(
@@ -19,19 +21,25 @@ export function Form(
     setNewPrice,
     productList,
     setProductList,
+    editIten,
+    handleEditIten,
   }: propsForm,
 ) {
   const handleFormSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    setProductList([
-      ...productList,
-      {
-        id: uuidv4(),
-        name: product.toUpperCase(),
-        priceValue: Number(price).toFixed(2),
-      }]);
-    setNewProduct('');
-    setNewPrice('');
+    if (!editIten) {
+      setProductList([
+        ...productList,
+        {
+          id: uuidv4(),
+          name: product.toUpperCase(),
+          priceValue: Number(price).toFixed(2),
+        }]);
+      setNewProduct('');
+      setNewPrice('');
+    } else {
+      handleEditIten();
+    }
   };
 
   // bg-opaced-100
