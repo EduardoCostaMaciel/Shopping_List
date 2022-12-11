@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Form } from './components/Form';
 import { Header } from './components/Header'
 import { Iproduct } from './types';
 
@@ -6,6 +7,8 @@ export const App = () => {
   const productListLocalStorage = localStorage.getItem('productList') || 'false';
   const initialState: [] = JSON.parse(productListLocalStorage) || [];
 
+  const [product, setNewProduct] = useState<string>('');
+  const [price, setNewPrice] = useState<string>('');
   const [productList, setProductList] = useState<Iproduct[]>(initialState);
 
   useEffect(() => {
@@ -18,7 +21,14 @@ export const App = () => {
 
       <h1>productList</h1>
 
-      <h1>Form</h1>
+      <Form
+        product={product}
+        setNewProduct={setNewProduct}
+        price={price}
+        setNewPrice={setNewPrice}
+        productList={productList}
+        setProductList={setProductList}
+      />
     </main>
   )
 }
