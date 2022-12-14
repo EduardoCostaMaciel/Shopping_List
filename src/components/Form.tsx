@@ -34,6 +34,7 @@ export function Form(
           id: uuidv4(),
           name: product.toUpperCase(),
           priceValue: Number(price).toFixed(2),
+          completed: false,
         }]);
       setNewProduct('');
       setNewPrice('');

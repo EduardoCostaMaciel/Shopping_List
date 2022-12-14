@@ -34,13 +34,14 @@ export const App = () => {
           id: editIten?.id,
           name: product.toUpperCase(),
           priceValue: Number(price).toFixed(2),
+          completed: editIten.completed
         } : prod));
     setProductList(newList);
     setEditIten(undefined);
   };
 
   return (
-    <main className="min-h-screen bg-primary-300 sm:container">
+    <main className="min-h-screen bg-primary-300 sm:container sm:shadow-sm">
       <Header productList={productList} />
 
       <ProductList
