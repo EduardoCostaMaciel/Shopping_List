@@ -48,6 +48,7 @@ export function ProductList(
         .map(({ id, name, priceValue, completed }) => (
           <li
             key={id}
+            onDoubleClick={() => handleIsProductChecked(id)}
             className={`
               relative
               flex
@@ -59,34 +60,21 @@ export function ProductList(
               px-2
               py-1
               m-1
-              ${completed ? 'line-through' : null}
-              decoration-secundary-400
               sm:m-2
             `}
           >
-            <span className="pl-1">{`${name}`}</span>
-            <span className="absolute inset-x-40 whitespace-nowrap sm:inset-x-1/2">
-              {`R$: ${(priceValue)}`}
-            </span>
+            <section className="container flex items-center justify-between">
+              <h5 className={`
+                  pl-1
+                  ${completed ? 'line-through' : null}
+                  decoration-secundary-400
+                `}>
+                {`${name}`}
+              </h5>
+              <h5 className="w-24 whitespace-nowrap">{`R$: ${(priceValue)}`}</h5>
+            </section>
 
-            <div className="absolute right-3 flex justify-center items-center gap-1">
-              <button
-                type="button"
-                onClick={() => handleIsProductChecked(id)}
-                className="
-                p-0.5
-                bg-primary-400
-                rounded-lg
-                flex
-                justify-center
-                items-center
-                shadow-sm
-                shadow-secundary-400
-              "
-              >
-                <Check size={18} className="text-secundary-400 m-0.5" />
-              </button>
-
+            <section className="flex justify-center items-center gap-2 pr-1">
               <button
                 type="button"
                 onClick={() => handleFindIten(id)}
@@ -101,7 +89,7 @@ export function ProductList(
                 shadow-secundary-400
               "
               >
-                <PencilLine size={18} className="text-secundary-400 m-0.5" />
+                <PencilLine size={22} className="text-secundary-400 m-0.5" />
               </button>
               <button
                 type="button"
@@ -117,9 +105,9 @@ export function ProductList(
                 shadow-secundary-400
               "
               >
-                <Trash size={18} className="text-secundary-400 m-0.5" />
+                <Trash size={22} className="text-secundary-400 m-0.5" />
               </button>
-            </div>
+            </section>
 
           </li>
         ))}
