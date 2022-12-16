@@ -9,9 +9,11 @@ export const App = () => {
   const initialState: [] = JSON.parse(productListLocalStorage) || [];
 
   const [product, setNewProduct] = useState<string>('');
+  const [quantity, setQuantity] = useState<string>('1');
   const [price, setNewPrice] = useState<string>('');
   const [productList, setProductList] = useState<Iproduct[]>(initialState);
   const [editIten, setEditIten] = useState<Iproduct>();
+  const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
 
   useEffect(() => {
     localStorage.setItem('productList', JSON.stringify(productList)), [productList]
@@ -20,9 +22,11 @@ export const App = () => {
   useEffect((): void => {
     if (editIten) {
       setNewProduct(editIten.name);
+      setQuantity(editIten.quantity);
       setNewPrice(editIten.priceValue || '0');
     } else {
       setNewProduct('');
+      setQuantity('1')
       setNewPrice('');
     }
   }, [editIten]);
@@ -33,10 +37,12 @@ export const App = () => {
         ? {
           id: editIten?.id,
           name: product.toUpperCase(),
-          priceValue: Number(price).toFixed(2),
+          priceValue: (Number(quantity) * Number(price)).toFixed(2),
+          quantity,
           completed: editIten.completed
         } : prod));
     setProductList(newList);
+    setIsOpenForm(false)
     setEditIten(undefined);
   };
 
@@ -49,17 +55,23 @@ export const App = () => {
         product={product}
         setProductList={setProductList}
         setEditIten={setEditIten}
+        setIsOpenForm={setIsOpenForm}
       />
 
       <Form
         product={product}
         setNewProduct={setNewProduct}
+        quantity={quantity}
+        setQuantity={setQuantity}
         price={price}
         setNewPrice={setNewPrice}
         productList={productList}
         setProductList={setProductList}
         editIten={editIten}
+        setEditIten={setEditIten}
         handleEditIten={handleEditIten}
+        isOpenForm={isOpenForm}
+        setIsOpenForm={setIsOpenForm}
       />
     </main>
   )
