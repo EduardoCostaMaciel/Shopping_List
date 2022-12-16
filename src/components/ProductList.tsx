@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, PencilLine, Trash } from 'phosphor-react';
+import { PencilLine, Trash } from 'phosphor-react';
 import { Iproduct } from '../types';
 
 type propsList = {
@@ -7,6 +7,7 @@ type propsList = {
   productList: Iproduct[];
   setProductList: React.Dispatch<React.SetStateAction<Iproduct[]>>,
   setEditIten: React.Dispatch<React.SetStateAction<Iproduct | undefined>>,
+  setIsOpenForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function ProductList(
@@ -15,6 +16,7 @@ export function ProductList(
     productList,
     setProductList,
     setEditIten,
+    setIsOpenForm,
   }: propsList,
 ) {
 
@@ -42,7 +44,16 @@ export function ProductList(
 
   return (
     <ol
-      className="list-decimal list-inside bg-primary-300 text-slate-400 pt-16 pb-7 p-1 sm:container"
+      className="
+        list-decimal
+        list-inside
+        bg-primary-300
+        text-slate-400
+        pt-16
+        pb-7
+        px-1
+        sm:container
+      "
     >
       {productList && productList.filter((elem) => elem.name.includes(product.toUpperCase()))
         .map(({ id, name, priceValue, completed }) => (
@@ -53,6 +64,7 @@ export function ProductList(
               relative
               flex
               items-center
+              gap-2
               border-solid
               border-4
               border-slate-700
@@ -66,7 +78,7 @@ export function ProductList(
             <section className="container flex items-center justify-between">
               <h5 className={`
                   pl-1
-                  ${completed ? 'line-through' : null}
+                  ${completed ? 'line-through' : 'no-underline'}
                   decoration-secundary-400
                 `}>
                 {`${name}`}
@@ -74,10 +86,13 @@ export function ProductList(
               <h5 className="w-24 whitespace-nowrap">{`R$: ${(priceValue)}`}</h5>
             </section>
 
-            <section className="flex justify-center items-center gap-2 pr-1">
+            <section className="conteiner flex justify-center items-center gap-2 pr-1">
               <button
                 type="button"
-                onClick={() => handleFindIten(id)}
+                onClick={() => {
+                  handleFindIten(id)
+                  setIsOpenForm(true)
+                }}
                 className="
                 p-0.5
                 bg-primary-400

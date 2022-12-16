@@ -33,7 +33,7 @@ export function Header({ productList }: PropsProductList) {
         sm:inset-x-1
       "
     >
-      <h1>Shopping List</h1>
+      <h1 className='font-extrabold italic'>Shopping List</h1>
       <span
         className="
             w-36
